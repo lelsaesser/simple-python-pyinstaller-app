@@ -18,6 +18,9 @@ pipeline {
                 success {
                     sh 'echo "Build stage finished successfully!"'
                 }
+                failure {
+                    sh 'echo "An error occured in the deliver stage."'
+                }
             }
         }
         stage('Test') {
@@ -33,6 +36,9 @@ pipeline {
             post {
                 success {
                     sh 'echo "Test stage finished successfully!"'
+                }
+                failure {
+                    sh 'echo "An error occured in the deliver stage."'
                 }
                 always {
                     junit 'test-reports/results.xml'
@@ -52,7 +58,14 @@ pipeline {
             post {
                 success {
                     sh 'echo "Deliver stage finished successfully!"'
+                }
+                failure {
+                    sh 'echo "An error occured in the deliver stage."'
+                }
+                always {
+                    mail to: 'ydh09475@bcaoo.com', subject: 'Jenkins pipeline run finished', body: "Pipeline finished with ${currentBuild.fullDisplayName}. URL: ${env.BUILD_URL}"
                     archiveArtifacts 'dist/add2vals'
+                    deleteDir()
                 }
             }
         }
