@@ -73,7 +73,8 @@ pipeline {
                     echo "PID: $!"
                     '''
 
-                    archiveArtifacts 'dist/add2vals', '**/logs_*.txt'
+                    archiveArtifacts 'dist/add2vals'
+                    archiveArtifacts '**/logs_*.txt'
                     deleteDir()
                 }
             }
