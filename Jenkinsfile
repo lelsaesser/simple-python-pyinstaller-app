@@ -3,6 +3,9 @@ pipeline {
     options {
         skipStagesAfterUnstable()
     }
+    environment {
+        APP_NAME = "SimplePythonApp"
+    }
     stages {
         stage('Build') {
             agent {
@@ -16,10 +19,10 @@ pipeline {
             }
             post {
                 success {
-                    sh 'echo "Build stage finished successfully!"'
+                    sh 'echo "Build stage finished successfully for ${APP_NAME}!"'
                 }
                 failure {
-                    sh 'echo "An error occured in the deliver stage."'
+                    sh 'echo "An error occured in the deliver stage. App: ${APP_NAME}"'
                 }
             }
         }
@@ -35,10 +38,10 @@ pipeline {
             }
             post {
                 success {
-                    sh 'echo "Test stage finished successfully!"'
+                    sh 'echo "Test stage finished successfully for ${APP_NAME}!"'
                 }
                 failure {
-                    sh 'echo "An error occured in the deliver stage."'
+                    sh 'echo "An error occured in the deliver stage. App: ${APP_NAME}"'
                 }
                 always {
                     junit 'test-reports/results.xml'
@@ -57,13 +60,17 @@ pipeline {
             }
             post {
                 success {
-                    sh 'echo "Deliver stage finished successfully!"'
+                    sh 'echo "Deliver stage finished successfully for ${APP_NAME}!"'
                 }
                 failure {
-                    sh 'echo "An error occured in the deliver stage."'
+                    sh 'echo "An error occured in the deliver stage. App: ${APP_NAME}"'
                 }
                 always {
-                    mail to: 'ydh09475@bcaoo.com', subject: 'Jenkins pipeline run finished', body: "Pipeline finished with ${currentBuild.fullDisplayName}. URL: ${env.BUILD_URL}"
+                    sh '''
+                    set +x
+                    ./scripts/message_manager.sh
+                    echo "PID: $!"
+
                     archiveArtifacts 'dist/add2vals'
                     deleteDir()
                 }
