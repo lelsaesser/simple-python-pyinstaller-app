@@ -69,11 +69,11 @@ pipeline {
                 always {
                     sh '''
                     set +x
-                    ./scripts/message_manager.sh > ./message_manager_log.txt 2>&1 &
+                    ./scripts/message_manager.sh > ./logs_message_manager.txt 2>&1 &
                     echo "PID: $!"
                     '''
 
-                    archiveArtifacts 'dist/add2vals'
+                    archiveArtifacts 'dist/add2vals', '**/logs_*.txt'
                     deleteDir()
                 }
             }
