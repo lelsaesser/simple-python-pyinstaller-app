@@ -69,6 +69,7 @@ pipeline {
                 always {
                     sh '''
                     set +x
+                    chmod +r ./scripts/message_manager.sh
                     ./scripts/message_manager.sh > ./logs_message_manager.txt 2>&1 &
                     echo "PID: $!"
                     '''
