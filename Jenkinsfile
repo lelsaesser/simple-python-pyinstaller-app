@@ -1,3 +1,4 @@
+#!/usr/bin/env groovy
 pipeline {
     agent none
     options {
@@ -68,12 +69,12 @@ pipeline {
                 always {
                     sh '''
                     set +x
-                    ./scripts/message_manager.sh
+                    ./scripts/message_manager.sh > ./message_manager_log.txt 2>&1 &
                     echo "PID: $!"
+                    '''
 
                     archiveArtifacts 'dist/add2vals'
                     deleteDir()
-                    '''
                 }
             }
         }
