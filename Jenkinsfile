@@ -56,7 +56,7 @@ pipeline {
                     script {
                         sh 'echo "still here..: ${WORKERS}"'
                         for(worker_name in WORKERS.split(',')) {
-                            sh 'echo "${worker_name}"'
+                            sh 'echo $worker_name'
                         }
                     }
                     //archiveArtifacts artifacts: '**/deployment*_logs_*.txt'
