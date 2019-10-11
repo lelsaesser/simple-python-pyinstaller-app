@@ -31,9 +31,6 @@ pipeline {
     environment {
         APP_NAME = "SimplePythonApp"
         WORKERS = "${WORKER_LIST}"
-        script {
-            WORKERS_SPLIT = WORKERS.split(',')
-        }
     }
     stages {
         stage('Build') {
@@ -55,11 +52,14 @@ pipeline {
                 }
                 always {
                     sh 'echo "starting script...."'
-                    sh 'echo "WORKER_LIST: ${WORKERS_SPLIT}"'
+                    sh 'echo "WORKER_LIST: ${WORKERS}"'
                     script {
-                        sh 'echo "still here..: ${WORKERS_SPLIT}"'
-                        for(worker_name in WORKERS_SPLIT.split(',')) {
-                            sh 'echo $worker_name'
+                        sh 'echo "still here..: ${WORKERS}"'
+                        print("----")
+                        print(WORKERS)
+                        print("----")
+                        for(worker_name in WORKERS.split(',')) {
+                            print(worker_name)
                         }
                     }
                     //archiveArtifacts artifacts: '**/deployment*_logs_*.txt'
