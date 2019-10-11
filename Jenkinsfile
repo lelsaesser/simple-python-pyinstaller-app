@@ -1,4 +1,28 @@
 #!/usr/bin/env groovy
+
+def WORKER_PATH_MAP = [
+    'dox-api': 'api/',
+    'dox-extractor': 'extractor/',
+    'dox-ml-seq2mask': 'ml/seq2mask/',
+    'dox-ml-taxid': 'ml/taxid/',
+    'dox-ml-employeename': 'ml/employee_name',
+    'dox-ml-chargrid-invoice': 'ml/chargrid_invoice',
+    'dox-ml-chargrid-pa': 'ml/chargrid_pa',
+    'dox-magic': 'magic/',
+    'dox-matcher': 'matcher/',
+    'dox-rl-currencycode': 'rule/currency_code/',
+    'dox-auditor': "auditor/",
+    'dox-data-persistence': "data_persistence/",
+    'dox-language': 'language/',
+]
+def WORKER_UNITTEST_EXITCODES = [:]
+def WORKER_LIST = ""
+WORKER_PATH_MAP.each { key, value ->
+    WORKER_LIST += key
+    WORKER_LIST += ","
+}
+WORKER_LIST = WORKER_LIST[0..-2]
+
 pipeline {
     agent none
     options {
@@ -24,6 +48,14 @@ pipeline {
                 }
                 failure {
                     sh 'echo "An error occured in the deliver stage. App: ${APP_NAME}"'
+                }
+                always {
+                    script {
+                        for(worker_name in WORKER_LIST.split(',')) {
+                            sh 'echo ${worker_name} > ./deployment_worker_logs_${worker_name}.txt'
+                        }
+                    }
+                    archiveArtifacts artifacts: '**/deployment*_logs_*.txt'
                 }
             }
         }
