@@ -53,7 +53,7 @@ pipeline {
                 always {
                     script {
                         for(worker_name in WORKERS.split(',')) {
-                            sh "echo $worker_name > ./deployment_worker_logs_$worker_name.txt"
+                            sh "echo $worker_name > ./deployment_worker_logs_${worker_name}.txt"
                         }
                     }
                     archiveArtifacts artifacts: '**/deployment*_logs_*.txt'
