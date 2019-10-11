@@ -50,12 +50,12 @@ pipeline {
                     sh 'echo "An error occured in the deliver stage. App: ${APP_NAME}"'
                 }
                 always {
-                    sh 'starting script....'
-                    sh 'WORKER_LIST: ${WORKER_LIST}'
+                    sh 'echo "starting script...."'
+                    sh 'echo "WORKER_LIST: ${WORKER_LIST}"'
                     script {
-                        sh 'still here..: ${WORKER_LIST}'
+                        sh 'echo "still here..: ${WORKER_LIST}"'
                         for(worker_name in WORKER_LIST.split(',')) {
-                            sh 'echo ${worker_name}'
+                            sh 'echo "${worker_name}"'
                         }
                     }
                     //archiveArtifacts artifacts: '**/deployment*_logs_*.txt'
