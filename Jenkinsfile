@@ -59,7 +59,7 @@ pipeline {
                         print(WORKERS)
                         print("----")
                         for(worker_name in WORKERS.split(',')) {
-                            print(worker_name)
+                            sh 'echo worker_name'
                         }
                     }
                     //archiveArtifacts artifacts: '**/deployment*_logs_*.txt'
