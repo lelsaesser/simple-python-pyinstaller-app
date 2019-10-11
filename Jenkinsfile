@@ -21,7 +21,7 @@ WORKER_PATH_MAP.each { key, value ->
     WORKER_LIST += key
     WORKER_LIST += ","
 }
-
+WORKER_LIST = WORKER_LIST[0..-2]
 
 pipeline {
     agent none
@@ -30,7 +30,7 @@ pipeline {
     }
     environment {
         APP_NAME = "SimplePythonApp"
-        WORKER_LIST = WORKER_LIST[0..-2]
+        WORKERS = "${WORKER_LIST}"
     }
     stages {
         stage('Build') {
@@ -52,10 +52,10 @@ pipeline {
                 }
                 always {
                     sh 'echo "starting script...."'
-                    sh 'echo "WORKER_LIST: ${WORKER_LIST}"'
+                    sh 'echo "WORKER_LIST: ${WORKERS}"'
                     script {
-                        sh 'echo "still here..: ${WORKER_LIST}"'
-                        for(worker_name in WORKER_LIST.split(',')) {
+                        sh 'echo "still here..: ${WORKERS}"'
+                        for(worker_name in WORKERS.split(',')) {
                             sh 'echo "${worker_name}"'
                         }
                     }
