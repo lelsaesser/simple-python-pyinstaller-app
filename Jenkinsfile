@@ -31,6 +31,9 @@ pipeline {
     environment {
         APP_NAME = "SimplePythonApp"
         WORKERS = "${WORKER_LIST}"
+        script {
+            WORKERS_SPLIT = WORKERS.split(',')
+        }
     }
     stages {
         stage('Build') {
@@ -52,10 +55,10 @@ pipeline {
                 }
                 always {
                     sh 'echo "starting script...."'
-                    sh 'echo "WORKER_LIST: ${WORKERS}"'
+                    sh 'echo "WORKER_LIST: ${WORKERS_SPLIT}"'
                     script {
-                        sh 'echo "still here..: ${WORKERS}"'
-                        for(worker_name in WORKERS.split(',')) {
+                        sh 'echo "still here..: ${WORKERS_SPLIT}"'
+                        for(worker_name in WORKERS_SPLIT.split(',')) {
                             sh 'echo $worker_name'
                         }
                     }
