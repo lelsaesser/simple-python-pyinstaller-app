@@ -31,7 +31,7 @@ pipeline {
     environment {
         APP_NAME = "SimplePythonApp"
         WORKERS = "${WORKER_LIST}"
-        SPACE_NAME = "abc"
+        SPACE_NAME = "abc-2"
     }
     stages {
         stage('Build') {
