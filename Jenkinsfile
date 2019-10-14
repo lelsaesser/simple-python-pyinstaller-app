@@ -31,6 +31,7 @@ pipeline {
     environment {
         APP_NAME = "SimplePythonApp"
         WORKERS = "${WORKER_LIST}"
+        WORKER_SUFFIX = "abc-2"
     }
     stages {
         stage('Build') {
@@ -51,6 +52,13 @@ pipeline {
                     sh 'echo "An error occured in the deliver stage. App: ${APP_NAME}"'
                 }
                 always {
+                    sh 'echo "starting suffix test:"'
+                    if(env.WORKER_SUFFIX.contains("-2")) {
+                        sh 'echo ${WORKER_SUFFIX} contains "-2"!'
+                    } else {
+                        sh 'echo ${WORKER_SUFFIX}'
+                    }
+
                     script {
                         for(worker_name in WORKERS.split(',')) {
                             sh "echo $worker_name > ./deployment_worker_logs_${worker_name}.txt"
