@@ -31,7 +31,7 @@ pipeline {
     environment {
         APP_NAME = "SimplePythonApp"
         WORKERS = "${WORKER_LIST}"
-        WORKER_SUFFIX = "abc-2"
+        SPACE_NAME = "abc"
     }
     stages {
         stage('Build') {
@@ -54,11 +54,13 @@ pipeline {
                 always {
                     script {
                         sh 'echo "starting suffix test:"'
-                        if(env.WORKER_SUFFIX.contains("-2")) {
-                            sh 'echo ${env.WORKER_SUFFIX} contains "-2"!'
+                        WORKER_SUFFIX = ""
+                        if(SPACE_NAME.contains("-2")) {
+                            sh 'echo $SPACE_NAME'
+                            sh 'echo $WORKER_SUFFIX is "-2"!'
                         }
                         else {
-                            sh 'echo ${env.WORKER_SUFFIX}'
+                            sh 'echo $WORKER_SUFFIX'
                         }
                         for(worker_name in WORKERS.split(',')) {
                             sh "echo $worker_name > ./deployment_worker_logs_${worker_name}.txt"
