@@ -55,10 +55,10 @@ pipeline {
                     script {
                         sh 'echo "starting suffix test:"'
                         if(env.WORKER_SUFFIX.contains("-2")) {
-                            sh 'echo ${WORKER_SUFFIX} contains "-2"!'
+                            sh 'echo ${env.WORKER_SUFFIX} contains "-2"!'
                         }
                         else {
-                            sh 'echo ${WORKER_SUFFIX}'
+                            sh 'echo ${env.WORKER_SUFFIX}'
                         }
                         for(worker_name in WORKERS.split(',')) {
                             sh "echo $worker_name > ./deployment_worker_logs_${worker_name}.txt"
