@@ -58,7 +58,7 @@ pipeline {
                         sh 'echo "starting suffix test"'
                         code = load 'suffix_calc.groovy'
                         WORKER_SUFFIX = code.set_suffix()
-                        echo 'Worker suffix: $WORKER_SUFFIX'
+                        echo "Worker suffix: $WORKER_SUFFIX"
 
                         for(worker_name in WORKERS.split(',')) {
                             sh "echo $worker_name > ./deployment_worker_logs_${worker_name}.txt"
