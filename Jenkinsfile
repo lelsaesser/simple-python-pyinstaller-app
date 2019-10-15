@@ -23,8 +23,6 @@ WORKER_PATH_MAP.each { key, value ->
 }
 WORKER_LIST = WORKER_LIST[0..-2]
 
-def code
-
 pipeline {
     agent none
     options {
