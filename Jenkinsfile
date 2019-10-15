@@ -54,14 +54,10 @@ pipeline {
                 always {
                     script {
                         sh 'echo "starting suffix test:"'
-                        WORKER_SUFFIX = ""
-                        if(SPACE_NAME.contains("-2")) {
-                            sh 'echo $SPACE_NAME'
-                            sh 'echo $WORKER_SUFFIX is "-2"!'
-                        }
-                        else {
-                            sh 'echo $WORKER_SUFFIX'
-                        }
+                        code = load './scripts/suffix_calc.groovy'
+                        WORKER_SUFFIX = code.set_suffix()
+                        echo 'Worker suffix: $WORKER_SUFFIX'
+
                         for(worker_name in WORKERS.split(',')) {
                             sh "echo $worker_name > ./deployment_worker_logs_${worker_name}.txt"
                         }
