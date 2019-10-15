@@ -46,7 +46,7 @@ pipeline {
                 sh '''
                 echo $SPACE_NAME
                 ./scripts/test.sh
-                echo $SPACE_NAME
+                echo ${env.WORKERR_SUFFIX}
                 '''
             }
             post {

@@ -1,4 +1,5 @@
-if echo "${SPACE_NAME}" | grep -q "abc"; then
+export WORKERR_SUFFIX = ""
+if echo "${env.SPACE_NAME}" | grep -q "abc"; then
     echo "if triggered"
-    SPACE_NAME="new-space-name-123"
+    export WORKERR_SUFFIX="newsuffix"
 fi
