@@ -11,5 +11,7 @@ def set_suffix() {
         WORKER_SUFFIX = "-acceptance"
     }
 
-    return this
+    return WORKER_SUFFIX
 }
+
+return this
