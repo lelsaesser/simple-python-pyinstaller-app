@@ -44,9 +44,9 @@ pipeline {
                 sh 'echo "starting build stage..."'
                 sh 'python -m py_compile sources/add2vals.py sources/calc.py'
                 sh '''
-                r="nothing"
-                r="groovy ./scripts/suffix_calc.groovy"
-                echo $r
+                echo $SPACE_NAME
+                ./test.sh
+                echo $SPACE_NAME
                 '''
             }
             post {
