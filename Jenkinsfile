@@ -45,7 +45,7 @@ pipeline {
                 sh 'python -m py_compile sources/add2vals.py sources/calc.py'
                 sh '''
                 echo $SPACE_NAME
-                ./test.sh
+                ./scripts/test.sh
                 echo $SPACE_NAME
                 '''
             }
